@@ -1,0 +1,123 @@
+//directives
+#include <stdio.h>
+
+//fcuntion to get the min valued element in array A
+int getLeastValuedElement(int a[], int b[], int n)
+{
+   // Initialize least_num with the first element of the array
+   int least_num = a[0];
+
+    // Iterate through the array to find the smallest element
+    for(int i = 1; i < n; i++)
+    {
+	// If a smaller element is found, update least_num
+        if(least_num > a[i])
+        {
+            least_num = a[i];
+        }
+	
+	// If current element is smaller, continue to next iteration
+        else
+        {
+            continue;
+        }
+    }
+
+    return least_num;
+}
+
+// Function to calculate the total number of steps required to make all elements of array 'a'
+// equal to the least element using the rule: ai = ai - bi (only if ai > bi)
+int getTotalNoofSteps(int a[], int b[], int n)
+{
+    int Total_count = 0;
+
+    // Find the least value in array 'a' to serve as the target value for all elements
+    int least_num = getLeastValuedElement(a, b, n);
+
+    for(int i = 0; i < n; i++)
+    {
+        int count = 0;
+
+	// Constraint check: input values must be <= 5000
+        if(a[i] > 5000 || b[i] > 5000)
+        {
+            return -1;
+        }
+
+	// Proceed only if a[i] > b[i] and a[i] is not already the least number
+        if((a[i] > b[i]) && (a[i] > least_num))
+        {
+
+	    // If bi is 0, we cannot reduce ai further → invalid case
+            if(b[i] == 0)
+            {
+                return -1;  
+            }
+            
+
+	    // Repeatedly subtract b[i] from a[i] until it becomes equal to least_num
+            while(a[i] != least_num)
+            {
+                a[i] = a[i] - b[i];
+                count++;
+            }
+
+
+	    // If we successfully reached least_num, add the step count
+            if(a[i] == least_num)
+            {
+                Total_count += count;
+            }
+
+
+            // In case we overshoot or never reach least_num → invalid case
+            else
+            {
+                return -1;
+            }
+
+        }
+
+	// Case where a[i] is already least and smaller than b[i] — valid, so continue
+        else if(a[i] < b[i] && a[i] == least_num)
+        {
+            continue;
+        }
+	
+	// Case where a[i] is smaller than or equal to b[i] but not equal to least_num — invalid
+        else if(a[i] <= b[i] && a[i] != least_num)
+        {
+            return -1;
+        }
+   
+    }
+
+    return Total_count;
+}
+
+int main()
+{
+   //declare the variuable for length of the arrays and get the value
+    int n;
+    scanf("%d", &n);
+
+    //declare and get the values of input arrays
+    int a[n], b[n];
+
+    for(int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        scanf("%d", &b[i]);
+    }
+
+    //print the total number of steps
+    printf("%d \n", getTotalNoofSteps(a, b, n));
+
+    return 0;
+}
+
