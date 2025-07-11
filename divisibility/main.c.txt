@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Function to compute a number formed by the last digit of each input number,
+// then check if that number is divisible by 10
+void gettheResultantNum(long int data[], int N, char *ans)
+{
+    int rem = 0, resultant_num = 0;
+
+    // Loop through each element in the input array
+    for(int i = 0; i < N; i++)
+    {
+        rem = data[i] % 10;  // Extract the last digit of the number
+        resultant_num = resultant_num * 10 + rem;  // Form the new number by appending the digit
+    }
+    
+    // Check if the resultant number ends with 0 (i.e., divisible by 10)
+    if(resultant_num % 10 == 0)
+    {
+        strcpy(ans, "Yes");  // Store "Yes" if divisible by 10
+    }
+    else 
+    {
+        strcpy(ans, "No");   // Store "No" otherwise
+    }
+}
+
+int main()
+{
+    int N = 0;
+    scanf("%d", &N);  // Read the number of elements
+    
+    char ans[10];  // Buffer to hold the final result ("Yes" or "No")
+    long int data[N];  // Array to store input numbers
+
+    // Read N long integers from input
+    for(int i = 0; i < N; i++)
+    {
+        scanf("%ld", &data[i]);
+    }
+
+    // Call the function to compute the result
+    gettheResultantNum(data, N, ans);
+
+    // Print the result
+    printf("%s \n", ans);
+    
+    return 0;
+}
