@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+int getNumofzoos(char *string)
+{
+    //initialize the count of 'z' and 'o' as 0
+    int count_z, count_o;
+    int i = 0;
+
+    //verify the no of Z and O in the whole string 
+    while(string[i] != '\0')
+    {
+        //if character is Z then increment the count of z
+        if(string[i] == 'z')
+        {
+            count_z++;
+        }
+
+         //if character is o then increment the count of o
+        else if(string[i] == 'o')
+        {
+            count_o++;
+        }
+
+        //if character is something else other than Z or O, then return from the function
+        else
+        {
+            return -1;
+        }
+
+        //move to next character
+        i++;
+    }
+
+    //if o = 2 x z, then return success 
+    if(count_o == (2 * count_z))
+    {
+        return 1;
+    }
+
+    //else return failure and return from he fucntion
+    else 
+    {
+        return -1;
+    }
+}
+
+
+int main()
+{
+	char string[20];
+
+    //get the string
+    scanf("%s", string);
+
+    //call the fucntion for getting the no. of 'Z's and O's and to verify if its o=2xz
+    if(getNumofzoos(string) == 1)
+    {
+        printf("Yes \n");
+    }
+    else
+    {
+        printf("No \n");
+    }
+
+    return 0;
+}
